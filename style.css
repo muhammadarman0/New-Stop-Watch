@@ -1,0 +1,246 @@
+:root {
+    /* Premium dark gradient palette */
+    --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    
+    /* Dynamic Button Gradients */
+    --btn-start: linear-gradient(135deg, #00b09b, #96c93d);
+    --btn-stop: linear-gradient(135deg, #cb2d3e, #ef473a);
+    --btn-reset: linear-gradient(135deg, #3a7bd5, #3a6073);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    background: var(--bg-gradient);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: var(--text-primary);
+}
+
+/* ---------------- Loading Animation ---------------- */
+.loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-gradient);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.loader-overlay.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top-color: #00b09b;
+    border-bottom-color: #ef473a;
+    border-radius: 50%;
+    animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ---------------- Main Container ---------------- */
+.stopwatch-container {
+    opacity: 0;
+    transform: scale(0.9) translateY(40px);
+    transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.stopwatch-container.show {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.hidden {
+    display: none;
+}
+
+/* Glassmorphism Panel */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 40px;
+    padding: 3.5rem 4.5rem;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+.title {
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+/* ---------------- Display Section ---------------- */
+.time-display-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.15);
+}
+
+/* Rotating active ring */
+.ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px dashed rgba(255, 255, 255, 0.15);
+    transition: all 0.4s ease;
+}
+
+.ring.active {
+    border-color: #00b09b;
+    border-style: solid;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    animation: rotateRing 2s linear infinite;
+    box-shadow: 0 0 20px rgba(0, 176, 155, 0.3);
+}
+
+@keyframes rotateRing {
+    to { transform: rotate(360deg); }
+}
+
+.time-display {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 4.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+
+.milliseconds {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.8rem;
+    color: var(--text-secondary);
+    margin-top: 15px;
+    letter-spacing: 2px;
+}
+
+/* ---------------- Controls ---------------- */
+.controls {
+    display: flex;
+    gap: 1.8rem;
+}
+
+.btn {
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    padding: 1.2rem 2.5rem;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-start {
+    background: var(--btn-start);
+    box-shadow: 0 6px 20px rgba(0, 176, 155, 0.3);
+}
+
+.btn-stop {
+    background: var(--btn-stop);
+    box-shadow: 0 6px 20px rgba(203, 45, 62, 0.3);
+}
+
+.btn-reset {
+    background: var(--btn-reset);
+    box-shadow: 0 6px 20px rgba(58, 123, 213, 0.3);
+}
+
+/* Hover & Active States */
+.btn:hover {
+    transform: translateY(-8px) scale(1.05);
+}
+
+.btn:hover::before {
+    opacity: 1;
+}
+
+.btn-start:hover {
+    box-shadow: 0 12px 30px rgba(0, 176, 155, 0.6);
+}
+
+.btn-stop:hover {
+    box-shadow: 0 12px 30px rgba(203, 45, 62, 0.6);
+}
+
+.btn-reset:hover {
+    box-shadow: 0 12px 30px rgba(58, 123, 213, 0.6);
+}
+
+.btn:active {
+    transform: translateY(2px) scale(0.95);
+}
+
+.btn-text {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn:hover .btn-text {
+    transform: scale(1.1);
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Stop Watch</title>
+    <!-- Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Initial Loading Scene -->
+    <div class="loader-overlay" id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="stopwatch-container hidden" id="stopwatch-container">
+        <div class="glass-panel">
+            <h1 class="title">Stopwatch</h1>
+            
+            <div class="time-display-wrapper">
+                <div class="ring" id="activity-ring"></div>
+                <div class="time-display" id="display">00:00:00</div>
+                <div class="milliseconds" id="ms-display">00</div>
+            </div>
+            
+            <div class="controls">
+                <button id="start-btn" class="btn btn-start"><span class="btn-text">Start</span></button>
+                <button id="stop-btn" class="btn btn-stop"><span class="btn-text">Stop</span></button>
+                <button id="reset-btn" class="btn btn-reset"><span class="btn-text">Reset</span></button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
